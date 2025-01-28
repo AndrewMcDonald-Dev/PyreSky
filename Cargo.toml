@@ -3,6 +3,13 @@ name = "firesky"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "firesky"
+path = "src/main.rs"
+
 [dependencies]
 atrium-api = "0.24.10"
 rustls = { version = "0.23.21", features = ["ring"] }
