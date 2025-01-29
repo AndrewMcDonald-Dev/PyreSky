@@ -1,29 +1,21 @@
-use firesky::Message;
+use firesky::{Connection, Message};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    rustls::crypto::ring::default_provider()
-        .install_default()
-        .expect("Failed to install rustls crypto provider.");
-    let mut connection = tungstenite::connect(
-        "wss://jetstream1.us-east.bsky.network/subscribe?wantedCollections=app.bsky.feed.post",
-    )?
-    .0;
+    // Define funtion to handle messages
+    let handle_message = |msg: Message| {
+        println!("Received message: {:?}\n", msg);
+    };
 
-    while connection.can_read() {
-        let msg = connection.read()?;
-        let decoded_msg = serde_json::from_str::<Message>(&msg.to_string());
+    let handle_error = |e: Box<dyn std::error::Error>| {
+        println!("Error: {:?}\n", e);
+    };
 
-        match decoded_msg {
-            Ok(_msg) => {
-                //println!("Received message: {:?}\n", msg);
-            }
-            Err(e) => {
-                println!("Messag: {:?}", msg);
-                println!("Error: {:?}\n", e);
-            }
-        }
-    }
+    // Create a new connection
+    let mut connection = Connection::new(handle_message, handle_error);
+
+    // Run the connection
+    connection.run()?;
 
     Ok(())
 }
