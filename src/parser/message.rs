@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use crate::account::Account;
-use crate::commit::Commit;
-use crate::identity::Identity;
+use crate::Account;
+use crate::Commit;
+use crate::Identity;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Message {

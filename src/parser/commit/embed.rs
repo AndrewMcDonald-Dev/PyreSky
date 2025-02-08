@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::commit::{
-    AspectRatio, External, Image, Media, SimpleRecord, SimpleRecordWithMedia, Video,
-};
+use crate::{AspectRatio, External, Image, Media, SimpleRecord, SimpleRecordWithMedia, Video};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Embed {

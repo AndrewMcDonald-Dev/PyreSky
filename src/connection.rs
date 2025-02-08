@@ -1,22 +1,30 @@
+use tokio::sync::broadcast;
+
 use crate::Message;
 
 pub struct Connection {
     pub connection: ConnectionHandle,
-    handle_message: fn(Message),
+    handle_message: fn(Message, broadcast::Sender<String>),
     handle_error: fn(Box<dyn std::error::Error>),
+    tx: broadcast::Sender<String>,
 }
 
 type ConnectionHandle =
     tungstenite::WebSocket<tungstenite::stream::MaybeTlsStream<std::net::TcpStream>>;
 
 impl Connection {
-    pub fn new(handle_message: fn(Message), handle_error: fn(Box<dyn std::error::Error>)) -> Self {
+    pub fn new(
+        handle_message: fn(Message, broadcast::Sender<String>),
+        handle_error: fn(Box<dyn std::error::Error>),
+        tx: broadcast::Sender<String>,
+    ) -> Self {
         let connection = Connection::get_connection().unwrap();
 
         Self {
             connection,
             handle_message,
             handle_error,
+            tx,
         }
     }
 
@@ -40,7 +48,7 @@ impl Connection {
 
             match decoded_msg {
                 Ok(msg) => {
-                    (self.handle_message)(msg);
+                    (self.handle_message)(msg, self.tx.clone());
                 }
                 Err(e) => {
                     (self.handle_error)(Box::new(e));

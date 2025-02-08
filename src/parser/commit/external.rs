@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::commit::ImageAlt;
+use crate::ImageAlt;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct External {

@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::commit::{External, Image, SimpleRecord, Video};
+use crate::{External, Image, SimpleRecord, Video};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Media {

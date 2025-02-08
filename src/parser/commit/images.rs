@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::commit::Ref;
+use crate::Ref;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Image {

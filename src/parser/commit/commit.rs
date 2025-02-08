@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::commit::{Embed, Facet};
+use crate::{Embed, Facet};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Commit {

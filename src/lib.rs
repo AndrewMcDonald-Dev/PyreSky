@@ -1,11 +1,10 @@
-mod account;
-mod commit;
+// Connection to bluesky
 mod connection;
-mod identity;
-mod message;
-
-pub use account::*;
-pub use commit::*;
 pub use connection::*;
-pub use identity::*;
-pub use message::*;
+
+// Parser for messages
+mod parser;
+pub use parser::*;
+
+// Stream of messages
+pub mod stream;
