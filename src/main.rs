@@ -1,7 +1,5 @@
 use axum::routing::get;
-use firesky::{
-    Connection, {on_connect, send_message_on_receive},
-};
+use firesky::{on_connect, send_message_on_receive};
 use socketioxide::SocketIo;
 use tokio::net::TcpListener;
 use tower::ServiceBuilder;
@@ -11,17 +9,18 @@ use tracing_subscriber::FmtSubscriber;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tracing::subscriber::set_global_default(FmtSubscriber::default())?;
+    rustls::crypto::ring::default_provider()
+        .install_default()
+        .expect("Failed to install rustls crypto provider.");
 
-    // Create a new connection
-    let connection = Connection::new();
+    tracing::subscriber::set_global_default(FmtSubscriber::default())?;
 
     // Biuld SocketIO layer
     let (layer, io) = SocketIo::builder().max_buffer_size(1024).build_layer();
 
     io.ns("/", on_connect);
 
-    tokio::spawn(send_message_on_receive(io, connection.connection));
+    tokio::spawn(send_message_on_receive(io));
 
     // Build Axum app
     let app = axum::Router::new()
