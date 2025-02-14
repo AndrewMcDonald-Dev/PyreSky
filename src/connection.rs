@@ -1,31 +1,15 @@
-use tokio::sync::broadcast;
-
-use crate::Message;
-
 pub struct Connection {
     pub connection: ConnectionHandle,
-    handle_message: fn(Message, broadcast::Sender<String>),
-    handle_error: fn(Box<dyn std::error::Error>),
-    tx: broadcast::Sender<String>,
 }
 
-type ConnectionHandle =
+pub type ConnectionHandle =
     tungstenite::WebSocket<tungstenite::stream::MaybeTlsStream<std::net::TcpStream>>;
 
 impl Connection {
-    pub fn new(
-        handle_message: fn(Message, broadcast::Sender<String>),
-        handle_error: fn(Box<dyn std::error::Error>),
-        tx: broadcast::Sender<String>,
-    ) -> Self {
+    pub fn new() -> Self {
         let connection = Connection::get_connection().unwrap();
 
-        Self {
-            connection,
-            handle_message,
-            handle_error,
-            tx,
-        }
+        Self { connection }
     }
 
     pub fn get_connection() -> Result<ConnectionHandle, Box<dyn std::error::Error>> {
@@ -40,22 +24,10 @@ impl Connection {
 
         Ok(connection)
     }
+}
 
-    pub fn run(&mut self) -> Result<(), Box<dyn std::error::Error>> {
-        while self.connection.can_read() {
-            let msg = self.connection.read()?;
-            let decoded_msg = serde_json::from_str::<Message>(&msg.to_string());
-
-            match decoded_msg {
-                Ok(msg) => {
-                    (self.handle_message)(msg, self.tx.clone());
-                }
-                Err(e) => {
-                    (self.handle_error)(Box::new(e));
-                }
-            }
-        }
-
-        Ok(())
+impl Default for Connection {
+    fn default() -> Self {
+        Self::new()
     }
 }

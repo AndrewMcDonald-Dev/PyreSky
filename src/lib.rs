@@ -7,4 +7,5 @@ mod parser;
 pub use parser::*;
 
 // Stream of messages
-pub mod stream;
+mod websocket;
+pub use websocket::*;
