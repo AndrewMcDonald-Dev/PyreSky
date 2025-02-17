@@ -2,19 +2,29 @@
 <html>
 
 <head>
-  <!-- include htmx -->
-  <script src="https://unpkg.com/htmx.org@1.6.0" crossorigin="anonymous"></script>
+  <!-- HMTX -->
+  <script src="https://unpkg.com/htmx.org@1.9.12" crossorigin="anonymous"></script>
+  <!-- HTMX WebSocket Extension -->
   <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"></script>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <title>PyreSky</title>
 </head>
 
 <body>
-  <h1>Hello world</h1>
+  <header class="absolute top-0 left-0 right-0 z=20 bg-neutral-800 h-12 md:h-16 px-4 flex item-center">
+    <span class="text-neutral-300 text-lg md:text-4x1 m1-2 font-light target">PyreSky</span>
+  </header>
 
-  <!-- websocket connection -->
-  <div hx-ext="ws" ws-connect="ws://localhost:8080">
-    <!--Location for new messages-->
-    <div id="content"></div>
-  </div>
+  <main hx-ext="ws" ws-connect="/ws"
+    class="h-sceen overflow-y-scroll text-sm p-4 grid grid-cols-[7rem-3rem-1fr] md:grid-cols-[20rem_3rem_1fr] grid-flow-row auto-rows-max">
+    <div id="top-space" class="col-span-3 h-20 md:h-28"></div>
+    <div id="content">
+
+    </div>
+
+  </main>
 
 
 </body>

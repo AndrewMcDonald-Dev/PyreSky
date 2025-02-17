@@ -1,14 +1,10 @@
 use futures_util::StreamExt;
-use socketioxide::{extract::SocketRef, SocketIo};
-use tracing::{debug, error, info};
+use tokio::sync::broadcast;
+use tracing::{debug, error};
 
 use crate::{Kind, Operation};
 
-pub async fn on_connect(socket: SocketRef) {
-    info!("Socket connected: {}", socket.id);
-}
-
-pub async fn send_message_on_receive(io: SocketIo, templates: tera::Tera) {
+pub async fn send_message_on_receive(tx: broadcast::Sender<String>, templates: tera::Tera) {
     let url =
         "wss://jetstream1.us-east.bsky.network/subscribe?wantedCollections=app.bsky.feed.post";
 
@@ -34,7 +30,9 @@ pub async fn send_message_on_receive(io: SocketIo, templates: tera::Tera) {
 
                         let message = templates.render("message.html", &context).unwrap();
 
-                        io.emit("message", &message).await.unwrap();
+                        if let Err(e) = tx.send(message) {
+                            error!("Error sending message: {}", e);
+                        }
                     }
                 }
             }

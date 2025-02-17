@@ -1,3 +1,14 @@
 <div id="content" hx-swap-oob="beforeend">
-  {{ message }}
+  <a href="{{ profile }}" class="text-right pt-1">
+    <div class="truncate">
+      {{ name }}
+    </div>
+    <div class="text-xs text-neutral-500 truncate target">
+      {{ did }}
+    </div>
+  </a>
+  <div class="pt-2 avatar flex justify-center">{{ avatar }}</div>
+  <a href="{{ post }}" class="pt-2 break-words text-clip overflow-x-clip">
+    <span class="whitespace-pre-line">{{ message }}</span>
+  </a>
 </div>
