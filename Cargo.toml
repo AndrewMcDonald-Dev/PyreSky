@@ -1,6 +1,6 @@
 [package]
-name = "firesky"
-version = "0.1.0"
+name = "pyresky"
+version = "1.0.0"
 edition = "2021"
 
 [lib]

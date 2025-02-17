@@ -533,29 +533,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "firesky"
-version = "0.1.0"
-dependencies = [
- "atrium-api",
- "axum",
- "futures-util",
- "lazy_static",
- "rustls",
- "serde",
- "serde_json",
- "socketioxide",
- "tera",
- "tokio",
- "tokio-stream",
- "tokio-tungstenite",
- "tower",
- "tower-http",
- "tracing",
- "tracing-subscriber",
- "tungstenite",
-]
-
-[[package]]
 name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1268,6 +1245,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "60946a68e5f9d28b0dc1c21bb8a97ee7d018a8b322fa57838ba31cc878e22d99"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "pyresky"
+version = "1.0.0"
+dependencies = [
+ "atrium-api",
+ "axum",
+ "futures-util",
+ "lazy_static",
+ "rustls",
+ "serde",
+ "serde_json",
+ "socketioxide",
+ "tera",
+ "tokio",
+ "tokio-stream",
+ "tokio-tungstenite",
+ "tower",
+ "tower-http",
+ "tracing",
+ "tracing-subscriber",
+ "tungstenite",
 ]
 
 [[package]]
