@@ -9,19 +9,42 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <script>
+
+    let numMessages = 0;
+    document.addEventListener("htmx:wsBeforeMessage", function (event) {
+      numMessages++;
+      if (numMessages > 5) {
+
+        const messageContainer = document.querySelector(".message-container:first-child");
+        const didContainer = document.querySelector(".did-container:first-child");
+        const avatarContainer = document.querySelector(".avatar:first-child");
+
+        messageContainer.remove();
+        didContainer.remove();
+        avatarContainer.remove();
+      }
+    });
+
+    document.addEventListener("htmx:wsAfterMessage", function (event) {
+      const messageContainer = document.querySelector(".message-container:last-child");
+      messageContainer.scrollIntoView();
+    });
+
+  </script>
+
   <title>PyreSky</title>
 </head>
 
-<body>
-  <header class="absolute top-0 left-0 right-0 z=20 bg-neutral-800 h-12 md:h-16 px-4 flex item-center">
-    <span class="text-neutral-300 text-lg md:text-4x1 m1-2 font-light target">PyreSky</span>
+<body class="bg-neutral-900 text-neutral-300 flex flex-col">
+  <header class="absolute top-0 left-0 right-0 z-20 bg-neutral-800 h-12 md:h-16 px-4 flex item-center">
+    <span class="text-neutral-500 text-2xl md:text-4x1 m1-2 font-light target">PyreSky</span>
   </header>
 
-  <main hx-ext="ws" ws-connect="/ws"
-    class="h-sceen overflow-y-scroll text-sm p-4 grid grid-cols-[7rem-3rem-1fr] md:grid-cols-[20rem_3rem_1fr] grid-flow-row auto-rows-max">
-    <div id="top-space" class="col-span-3 h-20 md:h-28"></div>
-    <div id="content">
-
+  <main hx-ext="ws" ws-connect="/ws">
+    <div id="content"
+      class="h-sceen overflow-y-scroll text-sm p-4 grid grid-cols-[7rem-3rem-1fr] md:grid-cols-[20rem_3rem_1fr] grid-flow-row auto-rows-max">
+      <div id="top-space" class="col-span-3 h-20 md:h-28"></div>
     </div>
 
   </main>

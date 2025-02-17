@@ -16,17 +16,20 @@ pub async fn send_message_on_receive(tx: broadcast::Sender<String>, templates: t
         match decoded_msg {
             Ok(msg) => {
                 debug!("Received message: {:?}", msg);
+                let mut context = tera::Context::new();
+
+                context.insert("did", &msg.did);
 
                 if let Kind::Commit { commit } = msg.kind {
                     if let Operation::Create {
                         record,
                         collection: _,
-                        rkey: _,
+                        rkey,
                         cid: _,
                     } = commit.operation
                     {
-                        let mut context = tera::Context::new();
                         context.insert("message", &record.text);
+                        context.insert("cid", &rkey);
 
                         let message = templates.render("message.html", &context).unwrap();
 
