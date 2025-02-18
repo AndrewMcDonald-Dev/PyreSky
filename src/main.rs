@@ -9,8 +9,8 @@ use axum::{
     routing::{any, get},
     Extension,
 };
-use firesky::send_message_on_receive;
 use lazy_static::lazy_static;
+use pyresky::send_message_on_receive;
 use tera::Tera;
 use tokio::{net::TcpListener, sync::broadcast};
 use tower::ServiceBuilder;

@@ -1,15 +1,18 @@
 <div id="content" hx-swap-oob="beforeend">
-  <a href="https://bsky.app/profile/{{ did }}" class="did-container text-right pt-1">
-    <div class="truncate">
-      {{ did }}
-    </div>
-    <div class="text-xs text-neutral-500 truncate target">
-      {{ did }}
-    </div>
-  </a>
-  <div class="pt-2 avatar flex justify-center"></div>
-  <a href=" https://bsky.app/profile/{{ did }}/post/{{ cid }}"
-    class="message-container pt-2 break-words text-clip overflow-x-clip">
-    <span class="whitespace-pre-line">{{ message }}</span>
-  </a>
+  <div class="message grid grid-cols-[7rem-3rem-1fr] md:grid-cols-[20rem_3rem_1fr] grid-flow-row auto-rows-max">
+
+    <a href=" https://bsky.app/profile/{{ did }}" class="text-right pt-1 col-span-1">
+      <div class="truncate">
+        {{ did }}
+      </div>
+      <div class="text-xs text-neutral-500 truncate target">
+        {{ did }}
+      </div>
+    </a>
+    <div class="pt-2 avatar flex justify-center col-span-1"></div>
+    <a href=" https://bsky.app/profile/{{ did }}/post/{{ cid }}"
+      class="pt-2 break-words text-clip overflow-x-clip col-span-1">
+      <span class="whitespace-pre-line">{{ message }}</span>
+    </a>
+  </div>
 </div>
