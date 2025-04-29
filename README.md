@@ -108,7 +108,7 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-![Example screenshot](https://imgur.com/a/wHFedzO)
+![Example screenshot](https://i.imgur.com/asSdirs.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
